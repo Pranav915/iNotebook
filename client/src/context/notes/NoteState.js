@@ -3,7 +3,8 @@ import NoteContext from "./noteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  const host = "https://i-notebook915.herokuapp.com";
+  const host = "https://i-notebook915.herokuapp.com/";
+  // const host = "http://localhost:5000";
   const notesInitial = [];
 
   const [notes, setNotes] = useState(notesInitial);
@@ -28,7 +29,7 @@ const NoteState = (props) => {
   const addNote = async (title, description, tag) => {
     // ToDo API Call
 
-    const response = await fetch("http://localhost:5000/api/notes/addnote", {
+    const response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

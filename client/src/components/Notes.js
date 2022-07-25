@@ -12,8 +12,6 @@ const Notes = () => {
     getNotes();
   });
 
-  console.log(notes);
-
   const ref = useRef(null);
   const updateNote = (note) => {
     ref.current.click();
