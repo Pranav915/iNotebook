@@ -6,6 +6,8 @@ const NoteState = (props) => {
   const host = "https://i-notebook915.herokuapp.com";
   // const host = "http://localhost:5000";
   const notesInitial = [];
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   const [notes, setNotes] = useState(notesInitial);
 
@@ -17,8 +19,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI0ZjIxNDQ2NTgzMTc1MWFjODM1MGVmIn0sImlhdCI6MTY0OTM1MzAyOH0.HAMvdNTbGlzR_venGBzhldWk2ChGjvPEtx5XQLVYSbY",
+        "auth-token": token,
       },
     });
     const json = await response.json();
@@ -33,8 +34,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI0ZjIxNDQ2NTgzMTc1MWFjODM1MGVmIn0sImlhdCI6MTY0OTM1MzAyOH0.HAMvdNTbGlzR_venGBzhldWk2ChGjvPEtx5XQLVYSbY",
+        "auth-token": token,
       },
       body: JSON.stringify({
         title: title[0],
@@ -54,8 +54,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI0ZjIxNDQ2NTgzMTc1MWFjODM1MGVmIn0sImlhdCI6MTY0OTM1MzAyOH0.HAMvdNTbGlzR_venGBzhldWk2ChGjvPEtx5XQLVYSbY",
+        "auth-token": token,
       },
     });
     const json = await response.json();
@@ -74,18 +73,21 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI0ZjIxNDQ2NTgzMTc1MWFjODM1MGVmIn0sImlhdCI6MTY0OTM1MzAyOH0.HAMvdNTbGlzR_venGBzhldWk2ChGjvPEtx5XQLVYSbY",
+        "auth-token": token,
       },
-      body: JSON.stringify(title, description, tag),
+      body: JSON.stringify({ title, description, tag }),
     });
     const json = await response.json();
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+    console.log(json);
+
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag;
+        break;
       }
     }
   };

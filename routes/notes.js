@@ -17,7 +17,7 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
 
 // ROUTE 2: Add a new note using: POST "/api/notes/addnote". Login required.
 router.post(
-  '/addnote',
+  "/addnote",
   fetchuser,
   [
     body("title", "Enter a valid title").isLength({ min: 3 }),
@@ -62,7 +62,7 @@ router.put(
   async (req, res) => {
     // If there are errors return bad requests and the errors.
     try {
-      const {title,description,tag} = req.body;
+      const { title, description, tag } = req.body;
       // Create a newNote object
       const newNote = {};
       if (title) {
@@ -104,19 +104,17 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
     // Find the note to be deleted & delete it.
     let note = await Note.findById(req.params.id);
-      if (!note) {
-        return res.status(404).send("Not Found");
+    if (!note) {
+      return res.status(404).send("Not Found");
+    }
 
-      }
+    if (note.user.toString() !== req.user.id) {
+      return res.send(401).send("Not allowed");
+    }
 
-      if (note.user.toString() !== req.user.id) {
-        return res.send(401).send("Not allowed");
-      }
-
-    note = await Note.findByIdAndDelete(req.params.id)
-    res.json({"msg":"Successfully Deleted"})
-
-  }catch (error) {
+    note = await Note.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Successfully Deleted" });
+  } catch (error) {
     console.error(error.message);
     res.status(500).send("Some error occurred");
   }
