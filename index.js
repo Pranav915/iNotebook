@@ -22,10 +22,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
