@@ -10,7 +10,7 @@ const Notes = () => {
   const { notes, getNotes } = context;
   useEffect(() => {
     getNotes();
-  });
+  }, []);
 
   const ref = useRef(null);
   const updateNote = (note) => {
