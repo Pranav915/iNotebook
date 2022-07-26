@@ -45,3 +45,18 @@
 ### Edit Note
 
 ![Editing](./images/edit-note.png)
+___ 
+To access iNotebook from your local machine download the code from here
+>https : https://github.com/Pranav915/iNotebook
+
+Or Run this in your terminal
+
+```bash
+    git clone https://github.com/Pranav915/iNotebook
+```
+
+Then run the project by from your terminal using 
+```bash
+    npm start
+```
+___
